@@ -2,6 +2,7 @@
 	{
 		"type"      : "global",
 		"desc"		: "Global Settings",
+		"debug"		: "true",
 		"errors"    : {
 			"404"   : "errorpages/test-error-404.php"
 		},

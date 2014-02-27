@@ -1,6 +1,11 @@
 <?php
-session_start();
-// global params
+
+$_debug_time = microtime();
+$_debug_time = explode( ' ', $_debug_time );
+$_debug_time = $_debug_time[1] + $_debug_time[0];
+$_debug_start_time = $_debug_time;
+
+// SETUP up the params variable to be passed to the routed file.
 global $params;
 
 // Setup error reporting.
@@ -39,6 +44,7 @@ $trueuri = ltrim( $urlstruct['path'], VERSION . '/' );
 $globalLibs  = array();
 $globalHeaders  = array();
 $globalErrFiles = array();
+$globalDebug = false;
 
 $resources = glob( ABSPATH . 'resources/*.json' );
 $routes = array();
@@ -53,6 +59,9 @@ foreach ( $resources as &$resource ) {
 			if ( isset( $set_route['type'] ) ) {
 				if ( $set_route['type'] == 'global' ) {
 					// include GLOBAL options
+					if ( !empty( $set_route['debug'] ) ) {
+						$globalDebug = true;
+					}
 					if ( !empty( $set_route['errors'] ) ) {
 						$globalErrFiles = $set_route['errors'];
 					}
@@ -104,7 +113,10 @@ foreach ( $routes as &$try_route ) {
 
 
 if ( isset( $route ) ) {
-
+	// enable global debug for this route.
+	if ( !empty( $globalDebug ) ) {
+		$route['debug'] = true;
+	}
 	// Start Routing
 	// wrapped in a try to catch exceptions and to trace errors
 	// include libraries first
@@ -199,9 +211,17 @@ if ( isset( $route ) ) {
 				echo $buffer;
 			}elseif ( !empty( $_output ) ) {
 				if ( is_array( $_output ) || is_object( $_output ) ) {
+
 					header( "Content-Type: application/json charset=UTF-8", true );
 					// append version to output
-					$_output = array_merge( array( 'version' => VERSION ), $_output );
+					$_debug_time = microtime();
+					$_debug_time = explode( ' ', $_debug_time );
+					$_debug_time = $_debug_time[1] + $_debug_time[0];
+					$_debug_finish_time = $_debug_time;
+					$_debug_total_time = round( ( $_debug_finish_time - $_debug_start_time ), 4 );
+					if ( !empty( $route['debug'] ) ) {
+						$_output = array_merge( array( '_render_time' => $_debug_total_time, '_version' => VERSION ), $_output );
+					}
 					echo json_encode( $_output );
 				}else {
 					echo $_output;
