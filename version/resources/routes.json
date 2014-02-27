@@ -1,17 +1,23 @@
 [
 	{
-		"name"		:	"test/route/:param",
-		"desc"		:	"Route Description",
-		"debug"		:	true,
+		"name"		:	"test/route/:my_value",
+		"desc"		:	"Route Description - So I know what it does. nothing more.",
+		"debug"		:	false,
+		"headers"	:	{
+			"Content-Type": "application/json"
+		},
 		"libraries"	:	[
 			"libs/test-lib.php"
 		],
-		"headers"	:	{
-			"Content-Type": "text/html"
-		},
 		"methods"	:	{
 			"GET"	:	{
-				"file":	"methods/test-method.php"
+				"headers"	:	{
+					"Access-Control-Allow-Origin"	:	"*"
+				},
+				"libraries"	:	[
+					"libs/test-lib.php"
+				],
+				"file": "methods/test-method.php"
 			}
 		}
 	}
