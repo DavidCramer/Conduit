@@ -1,0 +1,18 @@
+[
+	{
+		"name"		:	"test/route/:param",
+		"desc"		:	"Route Description",
+		"debug"		:	true,
+		"libraries"	:	[
+			"libs/test-lib.php"
+		],
+		"headers"	:	{
+			"Content-Type": "text/html"
+		},
+		"methods"	:	{
+			"GET"	:	{
+				"file":	"methods/test-method.php"
+			}
+		}
+	}
+]
