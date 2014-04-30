@@ -1,0 +1,11 @@
+
+$HTTP["host"] =~ "" {
+  server.error-handler-404  = "/index.php?error=404"
+  url.rewrite-if-not-file = (
+    "^/(static).*/?" => "$0",
+    "^/.*?(\?.*)?$" => "/index.php$1"
+  )
+}
+$HTTP["url"] =~ "" {
+    expire.url = ( "/static/" => "access plus 7 days" )
+}
