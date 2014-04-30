@@ -19,6 +19,11 @@ or
 
 What Falcon gets to work with is `version` `request route`.
 
+The `request route` is broken down into parts, or a `path`. The path for this example is `user` `2234` `details`.
+
+This path is now matched against the resource rules of the requested version.
+
+The router loads up all the defined rules and sequentually 
 
 ### Directory Structure
 
