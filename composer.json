@@ -1,0 +1,7 @@
+{
+    "name": "desertsnowman/conduit",
+    "description": "A fast PHP router.",
+    "require": {
+        "php": "^5.3.3 || ^7.0"
+    }
+}
